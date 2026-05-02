@@ -8,7 +8,7 @@ import (
 )
 
 func TestLetStatements(t *testing.T) {
-	input := "foobar;"
+	input := "5;"
 
 	l := lexer.New(input)
 	p := New(l)
@@ -25,16 +25,15 @@ func TestLetStatements(t *testing.T) {
 			program.Statements[0])
 	}
 
-	ident, ok := stmt.Expression.(*ast.Identifier)
+	literal, ok := stmt.Expression.(*ast.IntegerLiteral)
 	if !ok {
-		t.Fatalf("exp not *ast.Identifier. got=%T", stmt.Expression)
+		t.Fatalf("exp not *ast.IntegerLiteral. got=%T", stmt.Expression)
 	}
-	if ident.Value != "foobar" {
-		t.Errorf("ident.Value not %s. got=%s", "foobar", ident.Value)
+	if literal.Value != 5 {
+		t.Errorf("ident.Value not %s. got=%v", "foobar", &literal.Value)
 	}
-	if ident.TokenLiteral() != "foobar" {
-		t.Errorf("ident.TokenLiteral not %s. got=%s", "foobar",
-			ident.TokenLiteral())
+	if literal.TokenLiteral() != "5" {
+		t.Errorf("ident.TokenLiteral not %s. got=%s", "5", literal.TokenLiteral())
 	}
 }
 
